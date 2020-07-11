@@ -140,36 +140,39 @@ public class Controller implements Initializable {
      **/
     @FXML
     private void checkIn() {
-        int ID = Integer.parseInt(menu.getText());
+        try{
+            int ID = Integer.parseInt(menu.getText());
 
-        //先判断是否有该员工，后判断该员工是否已经有今日的打卡记录，若已有则提示，若无则新建
-        if(this.com.getEmployee(ID)!=null){
-            ArrayList<DakaInfo> set = list.getDakaSet(sim.format(new Date()));
+            //先判断是否有该员工，后判断该员工是否已经有今日的打卡记录，若已有则提示，若无则新建
+            if(this.com.getEmployee(ID)!=null){
+                ArrayList<DakaInfo> set = list.getDakaSet(sim.format(new Date()));
 
-            //判断是否已经有当日打卡信息的集合，若有则将新打卡信息加入，若无则新建集合并加入打卡信息
-            if(set != null){
-                for(DakaInfo dki : set){
+                //判断是否已经有当日打卡信息的集合，若有则将新打卡信息加入，若无则新建集合并加入打卡信息
+                if(set != null){
+                    for(DakaInfo dki : set){
 
-                    //判断当日打卡信息集合中是否已经有该员工的签到信息，若有则给出提示，若无则新建打卡信息并加入当日打卡信息集合
-                    if(dki.getID() == ID && this.todayIsThatday(dki.getCheckin())){
-                        label1.setText("卡号为"+ID+"的该员工今天已签到！");
-                        return;
+                        //判断当日打卡信息集合中是否已经有该员工的签到信息，若有则给出提示，若无则新建打卡信息并加入当日打卡信息集合
+                        if(dki.getID() == ID && this.todayIsThatday(dki.getCheckin())){
+                            label1.setText("卡号为"+ID+"的该员工今天已签到！");
+                            return;
+                        }
                     }
+                    set.add(new DakaInfo(ID,new Date(),null));
+                    list.getDakaMap().put(sim.format(new Date()),set);
+                    label1.setText("卡号为"+ID+"的员工打卡成功!");
+                    return;
+                }else{
+                    set = new ArrayList<>();
+                    set.add(new DakaInfo(ID,new Date(),null));
+                    list.getDakaMap().put(sim.format(new Date()),set);
+                    label1.setText("卡号为"+ID+"的员工打卡成功!");
+                    return;
                 }
-                set.add(new DakaInfo(ID,new Date(),null));
-                list.getDakaMap().put(sim.format(new Date()),set);
-                label1.setText("卡号为"+ID+"的员工打卡成功!");
-                return;
-            }else{
-                set = new ArrayList<>();
-                set.add(new DakaInfo(ID,new Date(),null));
-                list.getDakaMap().put(sim.format(new Date()),set);
-                label1.setText("卡号为"+ID+"的员工打卡成功!");
-                return;
             }
+            label1.setText("无此ID员工");
+        }catch (NumberFormatException e){
+            label1.setText("非法输入,请重试！");
         }
-        label1.setText("无此ID员工");
-
     }
 
     /*

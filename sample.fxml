@@ -9,10 +9,6 @@
 
 <AnchorPane prefHeight="699.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CheckInCheckOut.Controller">
    <children>
-      <TextFlow layoutX="14.0" layoutY="75.0" onDragDetected="#checkOut" prefHeight="80.0" prefWidth="560.0">
-         <children>
-            <TextField fx:id="menu" prefHeight="88.0" prefWidth="563.0" promptText="请在此输入信息" text="请在此输入员工ID后选择签到或签退" />
-         </children></TextFlow>
       <Label layoutX="192.0" layoutY="14.0" prefHeight="49.0" prefWidth="209.0" text="欢迎使用员工打卡系统" textFill="#595b38">
          <font>
             <Font size="20.0" />
@@ -29,10 +25,11 @@
             </TableView>
          </children>
       </Pane>
-      <Label fx:id="label1" layoutX="72.0" layoutY="637.0" prefHeight="20.0" prefWidth="439.0" text="" />
+      <Label fx:id="label1" layoutX="72.0" layoutY="637.0" prefHeight="20.0" prefWidth="439.0" text="" textFill="#ff3508" />
       <Button fx:id="checkIn" layoutX="69.0" layoutY="567.0" mnemonicParsing="false" onAction="#checkIn" prefHeight="41.0" prefWidth="114.0" text="签到" />
       <Button fx:id="checkOut" layoutX="401.0" layoutY="567.0" mnemonicParsing="false" onAction="#checkOut" prefHeight="41.0" prefWidth="133.0" text="签退" />
       <Button fx:id="quit" layoutX="244.0" layoutY="593.0" mnemonicParsing="false" onAction="#quit" text="保存并退出" />
       <Button fx:id="printInfo" layoutX="237.0" layoutY="552.0" mnemonicParsing="false" onAction="#printInfo" text="打印打卡信息" />
+      <TextField fx:id="menu" layoutX="152.0" layoutY="63.0" prefHeight="88.0" prefWidth="288.0" promptText="请在此输入信息" text="请在此输入员工ID后选择签到或签退" />
    </children>
 </AnchorPane>
