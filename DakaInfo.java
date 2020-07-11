@@ -1,5 +1,8 @@
 package CheckInCheckOut;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -57,6 +60,8 @@ public class DakaInfo implements Serializable {
     public void setCheckout(Date checkout) {
         this.checkout = checkout;
     }
+
+
 
     @Override
     public String toString() {

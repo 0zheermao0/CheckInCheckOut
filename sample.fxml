@@ -22,10 +22,9 @@
          <children>
             <TableView fx:id="table1" layoutX="-3.0" layoutY="-6.0" prefHeight="377.0" prefWidth="551.0">
               <columns>
-                <TableColumn fx:id="dateCol" prefWidth="130.0" text="日期" />
-                <TableColumn fx:id="IDCol" prefWidth="61.0" text="员工ID" />
-                  <TableColumn fx:id="checkInCol" minWidth="0.0" prefWidth="178.0" text="签到时间" />
-                  <TableColumn fx:id="checkOutCol" prefWidth="170.0" text="签退时间" />
+                <TableColumn fx:id="IDCol" prefWidth="144.0" text="员工ID" />
+                  <TableColumn fx:id="checkInCol" minWidth="0.0" prefWidth="194.0" text="签到时间" />
+                  <TableColumn fx:id="checkOutCol" prefWidth="212.0" text="签退时间" />
               </columns>
             </TableView>
          </children>

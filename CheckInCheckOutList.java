@@ -12,9 +12,9 @@ import java.util.*;
  **/
 public class CheckInCheckOutList{
     //某日期当天对应的所有打卡信息,键:某年月日的字符串，值:当日所有员工的打卡信息的Set
-    private HashMap<String, HashSet<DakaInfo>> dakaList = new HashMap<String, HashSet<DakaInfo>>();
+    private HashMap<String, ArrayList<DakaInfo>> dakaMap = new HashMap<String, ArrayList<DakaInfo>>();
     //所有的存储的打卡信息对应的日期的迭代器
-    Set<String> date = this.getDakaList().keySet();
+    Set<String> date = this.getDakaMap().keySet();
 
     //尝试加载已有打卡信息
     {
@@ -27,7 +27,7 @@ public class CheckInCheckOutList{
                 Object obj = ois.readObject();
                 //如果读取到了信息则加载到程序中
                 if(obj != null){
-                    this.setDakaList((HashMap<String, HashSet<DakaInfo>>) obj);
+                    this.setDakaMap((HashMap<String, ArrayList<DakaInfo>>) obj);
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -47,36 +47,48 @@ public class CheckInCheckOutList{
      * @Param [string]
      * @return java.util.HashSet<CheckInCheckOut.DakaInfo>
      **/
-    public HashSet<DakaInfo> getDakaSet(String string){
-        HashSet<DakaInfo> set = new HashSet<>();
-                set = dakaList.get(string);
+    public ArrayList<DakaInfo> getDakaSet(String string){
+        ArrayList<DakaInfo> set = dakaMap.get(string);
         return set;
     }
 
-    //根据格式化后的日期的字符串获取该日的打卡名单
-    public HashSet<DakaInfo> getDakaInfos(String string) {
-        return dakaList.get(string);
+    /*
+     * @Description //TODO Get all the DakaInfos in file
+     * @Date 17:31 2020/7/11
+     * @Param [string]
+     * @return java.util.HashSet<CheckInCheckOut.DakaInfo>
+     **/
+    public ArrayList<DakaInfo> getDakaInfos() {
+        ArrayList<DakaInfo> temp = new ArrayList<>();
+        for(String s : this.getDate()){
+            if(this.getDate() == null){
+                return null;
+            }
+            assert false;
+            temp.addAll(dakaMap.get(s));
+        }
+        return temp;
     }
 
     public void saveDakaInfos() throws IOException {
         //判断要保存的信息是否为null防止程序崩溃
-        if(this.getDakaList()!=null && this.getDakaList().size()>0){
+        if(this.getDakaMap()!=null && this.getDakaMap().size()>0){
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("DakaInfos.dat"));
-            oos.writeObject(this.getDakaList());
+            oos.writeObject(this.getDakaMap());
             oos.close();
         }
     }
 
-    public HashMap<String, HashSet<DakaInfo>> getDakaList() {
-        return dakaList;
+    public HashMap<String, ArrayList<DakaInfo>> getDakaMap() {
+        return dakaMap;
     }
 
-    public void setDakaList(HashMap<String, HashSet<DakaInfo>> dakaList) {
-        this.dakaList = dakaList;
+    public void setDakaMap(HashMap<String, ArrayList<DakaInfo>> dakaMap) {
+        this.dakaMap = dakaMap;
     }
 
     public Set<String> getDate() {
-        return this.dakaList.keySet();
+        return this.dakaMap.keySet();
     }
 
     public void setDate(Set<String> date) {

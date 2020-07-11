@@ -1,6 +1,9 @@
 package CheckInCheckOut;
 
+import com.sun.javafx.beans.IDProperty;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,15 +27,13 @@ public class Controller implements Initializable {
     @FXML
     private Label label1;
     @FXML
-    private TableView<CheckInCheckOutList> table1;
+    private javafx.scene.control.TableView<TableView> table1 ;
     @FXML
-    private TableColumn<Set<String>, String> dateCol;
+    private TableColumn<TableView, String> IDCol;
     @FXML
-    private TableColumn<DakaInfo,Integer> IDCol;
+    private TableColumn<TableView,String> checkInCol;
     @FXML
-    private TableColumn<DakaInfo,Date> checkInCol;
-    @FXML
-    private TableColumn<DakaInfo,Date> checkOutCol;
+    private TableColumn<TableView,String> checkOutCol;
     @FXML
     private TextField menu;
 
@@ -55,15 +56,15 @@ public class Controller implements Initializable {
         try{
             boolean flag = true;
             while(flag){
-//                System.out.println("----员工打卡系统----");
-//                System.out.println("输入  0--------退出");
-//                System.out.println("输入  1--------签到");
-//                System.out.println("输入  2--------签退");
-//                System.out.println("输入  3--------查看签到信息");
-//                System.out.println("输入  4--------添加新员工信息");
-//                System.out.println("输入  5--------移除员工信息");
-//                System.out.println("输入  6--------打印当前员工列表");
-//                System.out.println("请输入想执行的操作：");
+                System.out.println("----员工打卡系统----");
+                System.out.println("输入  0--------退出");
+                System.out.println("输入  1--------签到");
+                System.out.println("输入  2--------签退");
+                System.out.println("输入  3--------查看签到信息");
+                System.out.println("输入  4--------添加新员工信息");
+                System.out.println("输入  5--------移除员工信息");
+                System.out.println("输入  6--------打印当前员工列表");
+                System.out.println("请输入想执行的操作：");
 
                 int choice = sc.nextInt();
                 switch (choice){
@@ -143,7 +144,7 @@ public class Controller implements Initializable {
 
         //先判断是否有该员工，后判断该员工是否已经有今日的打卡记录，若已有则提示，若无则新建
         if(this.com.getEmployee(ID)!=null){
-            HashSet<DakaInfo> set = list.getDakaSet(sim.format(new Date()));
+            ArrayList<DakaInfo> set = list.getDakaSet(sim.format(new Date()));
 
             //判断是否已经有当日打卡信息的集合，若有则将新打卡信息加入，若无则新建集合并加入打卡信息
             if(set != null){
@@ -156,18 +157,18 @@ public class Controller implements Initializable {
                     }
                 }
                 set.add(new DakaInfo(ID,new Date(),null));
-                list.getDakaList().put(sim.format(new Date()),set);
+                list.getDakaMap().put(sim.format(new Date()),set);
                 label1.setText("卡号为"+ID+"的员工打卡成功!");
                 return;
             }else{
-                set = new HashSet<>();
+                set = new ArrayList<>();
                 set.add(new DakaInfo(ID,new Date(),null));
-                list.getDakaList().put(sim.format(new Date()),set);
+                list.getDakaMap().put(sim.format(new Date()),set);
                 label1.setText("卡号为"+ID+"的员工打卡成功!");
                 return;
             }
         }
-        System.out.println("无此ID员工");
+        label1.setText("无此ID员工");
 
     }
 
@@ -182,7 +183,7 @@ public class Controller implements Initializable {
         int ID = Integer.parseInt(menu.getText());
         //判断是否有该ID对应的员工
         if(this.com.getEmployee(ID) != null){
-            HashSet<DakaInfo> set = list.getDakaSet(sim.format(new Date()));
+            ArrayList<DakaInfo> set = list.getDakaSet(sim.format(new Date()));
             //判断是否已经有当日打卡信息的集合，若有则判断是否已打卡
             if(set != null){
                 for(DakaInfo dki : set){
@@ -217,7 +218,7 @@ public class Controller implements Initializable {
     @FXML
     private void printInfo(){
         //判断是否已经有打卡记录，若无则提示并返回
-        if(this.list.getDakaList().size() == 0){
+        if(this.list.getDakaMap().size() == 0){
             label1.setText("还没有打卡记录!");
             return;
         }
@@ -225,20 +226,47 @@ public class Controller implements Initializable {
         //获取打卡信息Map的键值的Set便于遍历
         Set keySet = this.list.getDate();
 //        dateCol.setCellFactory(new PropertyValueFactory<CheckInCheckOutList,String>("日期"));
-        IDCol.setCellFactory(new PropertyValueFactory("员工ID"));
-        //根据日期键遍历打卡记录
-        for (String key : (Iterable<String>) keySet) {
-            HashSet<DakaInfo> dakaSet = this.list.getDakaSet(key);
-            System.out.println("--------------------");
-            System.out.println(key+"当天的打卡信息为:");
+//        IDCol.setCellFactory(new PropertyValueFactory("员工ID"));
+//        //根据日期键遍历打卡记录
+//        for (String key : (Iterable<String>) keySet) {
+//            HashSet<DakaInfo> dakaSet = this.list.getDakaSet(key);
+//            System.out.println("--------------------");
+//            System.out.println(key+"当天的打卡信息为:");
+//
+//
+//            //遍历该日期下的所有打卡信息实例
+//            for(DakaInfo dki : dakaSet){
+//
+//                System.out.println(dki);
+//            }
+//        }
 
-
-            //遍历该日期下的所有打卡信息实例
-            for(DakaInfo dki : dakaSet){
-
-                System.out.println(dki);
+        ObservableList<TableView> data = FXCollections.observableArrayList();
+        if(this.list.getDakaInfos() != null){
+            for(DakaInfo dki : list.getDakaInfos()){
+                if(dki.getCheckout() != null){
+                    data.add(new TableView(dki.getID()+"",sdf.format(dki.getCheckin()),sdf.format(dki.getCheckout())));
+                }else{
+                    data.add(new TableView(dki.getID()+"",sdf.format(dki.getCheckin()),null));
+                }
             }
+        }else{
+            label1.setText("还没有任何打卡信息!");
         }
+
+        //属性和列表绑定
+        IDCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIDProperty()));
+        checkInCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCheckInProperty()));
+        checkOutCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCheckOutProperty()));
+
+        table1.setItems(data);
+        table1.setVisible(true);
+
+        //存在测试
+        System.out.println(data);
+
+//        table1.setItems(rowmaps);
+//        IDCol.setCellValueFactory(new ObservableMapValueFactory<Integer>(IDCol));
         label1.setText("日志操作时间:"+sdf.format(new Date()));
     }
 
@@ -274,6 +302,8 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        IDCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("IDCol"));
+        checkInCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("checkInCol"));
+        checkOutCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("checkOut"));
     }
 }
