@@ -18,12 +18,13 @@ import java.util.*;
 
 /**
  * @Classname Main
- * @Description TODO 主控台测试类
+ * @Description TODO 控制台类和fxml文档连接
  * @Author Joey
  * @Date 2020/7/1 18:38
  * @Version 1.0
  **/
 public class Controller implements Initializable {
+    //FXML文档属性的提前声明
     @FXML
     private Label label1;
     @FXML
@@ -44,52 +45,53 @@ public class Controller implements Initializable {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
     //用于比较是否为同一天
     private SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd");
+    //FXML中TableView维护的列表
     private ObservableList<CheckInCheckOutList> data = FXCollections.observableArrayList(list);
 
     /*
-     * @Description //TODO 打卡系统交互节面
+     * @Description //TODO 打卡系统交互节面（已被GUI界面取代）
      * @Date 18:39 2020/7/4
      * @Param []
      * @return void
      **/
-    public void mainMenu(){
-        try{
-            boolean flag = true;
-            while(flag){
-                System.out.println("----员工打卡系统----");
-                System.out.println("输入  0--------退出");
-                System.out.println("输入  1--------签到");
-                System.out.println("输入  2--------签退");
-                System.out.println("输入  3--------查看签到信息");
-                System.out.println("输入  4--------添加新员工信息");
-                System.out.println("输入  5--------移除员工信息");
-                System.out.println("输入  6--------打印当前员工列表");
-                System.out.println("请输入想执行的操作：");
-
-                int choice = sc.nextInt();
-                switch (choice){
-                    case 1:this.checkIn();break;
-                    case 2:this.checkOut();break;
-                    case 3:this.printInfo();break;
-                    case 4:this.addEmployee();break;
-                    case 5:this.removeEmployee();break;
-                    case 6: this.com.printEmployee();break;
-                    case 0:
-                        flag = false;
-                        this.quit();
-                        break;
-                    default:System.out.println("非法的选择，请重试！");break;
-                }
-            }
-        }catch (InputMismatchException ime){
-            System.out.println("非法的选择，请重试！"); //阻止用户输入数字外的其他字符
-            sc.nextLine();
-            this.mainMenu();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public void mainMenu(){
+//        try{
+//            boolean flag = true;
+//            while(flag){
+//                System.out.println("----员工打卡系统----");
+//                System.out.println("输入  0--------退出");
+//                System.out.println("输入  1--------签到");
+//                System.out.println("输入  2--------签退");
+//                System.out.println("输入  3--------查看签到信息");
+//                System.out.println("输入  4--------添加新员工信息");
+//                System.out.println("输入  5--------移除员工信息");
+//                System.out.println("输入  6--------打印当前员工列表");
+//                System.out.println("请输入想执行的操作：");
+//
+//                int choice = sc.nextInt();
+//                switch (choice){
+//                    case 1:this.checkIn();break;
+//                    case 2:this.checkOut();break;
+//                    case 3:this.printInfo();break;
+//                    case 4:this.addEmployee();break;
+//                    case 5:this.removeEmployee();break;
+//                    case 6: this.com.printEmployee();break;
+//                    case 0:
+//                        flag = false;
+//                        this.quit();
+//                        break;
+//                    default:System.out.println("非法的选择，请重试！");break;
+//                }
+//            }
+//        }catch (InputMismatchException ime){
+//            System.out.println("非法的选择，请重试！"); //阻止用户输入数字外的其他字符
+//            sc.nextLine();
+//            this.mainMenu();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     /*
      * @Description //TODO 添加新员工到列表中
@@ -257,19 +259,18 @@ public class Controller implements Initializable {
             label1.setText("还没有任何打卡信息!");
         }
 
-        //属性和列表绑定
+        //属性和列表绑定（Java的lambda特性）
         IDCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIDProperty()));
         checkInCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCheckInProperty()));
         checkOutCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCheckOutProperty()));
 
+        //将属性填充到列表中
         table1.setItems(data);
         table1.setVisible(true);
 
         //存在测试
         System.out.println(data);
 
-//        table1.setItems(rowmaps);
-//        IDCol.setCellValueFactory(new ObservableMapValueFactory<Integer>(IDCol));
         label1.setText("日志操作时间:"+sdf.format(new Date()));
     }
 
@@ -305,8 +306,8 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        IDCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("IDCol"));
-        checkInCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("checkInCol"));
-        checkOutCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("checkOut"));
+//        IDCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("IDCol"));
+//        checkInCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("checkInCol"));
+//        checkOutCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("checkOut"));
     }
 }
