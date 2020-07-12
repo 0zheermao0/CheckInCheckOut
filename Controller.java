@@ -1,15 +1,12 @@
 package CheckInCheckOut;
 
-import com.sun.javafx.beans.IDProperty;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.*;
 import java.net.URL;
@@ -302,6 +299,17 @@ public class Controller implements Initializable {
         label1.setText("感谢使用本系统，所有信息已保存，再见!");
         Platform.exit();
     }
+
+    /*
+     * @Description //TODO 
+     * @Date 0:53 2020/7/13
+     * @Param []
+     * @return void
+     **/
+//    private void employeeManagement() throws IOException {
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(getClass().getResource("EmployeeManagement"));
+//    }
 
 
     @Override
