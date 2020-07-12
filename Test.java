@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 /**
  * @Classname Test
- * @Description TODO Main测试类
+ * @Description TODO
  * @Author Joey
  * @Date 2020/7/10 19:50
  * @Version 1.0
