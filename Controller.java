@@ -46,6 +46,8 @@ public class Controller implements Initializable {
     private TextField nametf;
     @FXML
     private Label lable2;
+    @FXML
+    public Button exitButton;
 
     //员工信息表
     @FXML
@@ -62,8 +64,6 @@ public class Controller implements Initializable {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
     //用于比较是否为同一天
     private SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd");
-//    //FXML中TableView维护的列表
-//    private ObservableList<CheckInCheckOutList> data = FXCollections.observableArrayList(list);
 
     /*
      * @Description //TODO 打卡系统交互节面（已被GUI界面取代）
@@ -127,7 +127,6 @@ public class Controller implements Initializable {
         String name = nametf.getText();
         com.addEmployee(new Employee(Integer.parseInt(ID),name));
         lable2.setText("添加成功!");
-        com.saveEmployees();
     }
 
     /*
@@ -137,12 +136,11 @@ public class Controller implements Initializable {
      * @return void
      **/
     public void removeEmployee() throws IOException {
-        String ID = emIDCol.getText();
+        String ID = IDtf.getText();
         for(Employee e : com.getEmployees()){
             if((e.getID()+"").equals(ID)){
                 com.removeEmployee(e);
                 lable2.setText("员工信息成功删除");
-                com.saveEmployees();
                 return;
             }
         }
@@ -310,16 +308,9 @@ public class Controller implements Initializable {
      **/
     @FXML
     private void quit() throws IOException {
-        //保存员工信息
-        this.com.saveEmployees();
         //保存打卡信息
         this.list.saveDakaInfos();
         Platform.exit();
-    }
-
-    @FXML
-    private void quitBack(){
-
     }
 
     @FXML
@@ -360,11 +351,22 @@ public class Controller implements Initializable {
         table2.setItems(data);
     }
 
+    /*
+     * @Description //TODO 尝试关闭第二窗口
+     * @Date 20:05 2020/7/14
+     * @Param []
+     * @return void
+     **/
+    public void quitBack() throws IOException {
+        //保存员工信息
+        this.com.saveEmployees();
+        Stage stage = (Stage)exitButton.getScene().getWindow();
+        stage.close();
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        IDCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("IDCol"));
-//        checkInCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("checkInCol"));
-//        checkOutCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("checkOut"));
+
     }
 }

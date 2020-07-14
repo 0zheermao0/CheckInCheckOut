@@ -22,10 +22,11 @@
           <TableColumn fx:id="emNameCol" onEditStart="#addEmployee" prefWidth="124.0" text="员工姓名" />
         </columns>
       </TableView>
-      <Button fx:id="printEmployee" layoutX="308.0" layoutY="356.0" mnemonicParsing="false" onAction="#printEmployee" text="打印员工信息" />
+      <Button fx:id="printEmployee" layoutX="331.0" layoutY="356.0" mnemonicParsing="false" onAction="#printEmployee" text="打印员工信息" />
       <TextField fx:id="IDtf" layoutX="201.0" layoutY="77.0" prefHeight="30.0" prefWidth="65.0" text="输入ID" />
       <TextField fx:id="nametf" layoutX="346.0" layoutY="77.0" prefHeight="30.0" prefWidth="80.0" text="输入姓名" />
       <Label fx:id="lable2" layoutX="167.0" layoutY="60.0" prefHeight="20.0" prefWidth="284.0" textFill="#e80303" />
-      <Button layoutX="466.0" layoutY="356.0" mnemonicParsing="false" onAction="#quit" text="保存并退出" />
+      <Button fx:id="exitButton" layoutX="506.0" layoutY="356.0" mnemonicParsing="false" onAction="#quitBack" text="退出" />
+      <Label layoutX="357.0" layoutY="335.0" text="注:更改员工数据需重启软件后生效" />
    </children>
 </AnchorPane>

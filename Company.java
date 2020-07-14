@@ -16,26 +16,7 @@ public class Company implements Iterable {
 
     //尝试加载已有员工列表
     {
-        File src = new File("Employees.dat");
-        if(src.exists()){
-            ObjectInputStream ois = null;
-            try {
-                ois = new ObjectInputStream(new FileInputStream(src));
-                Object obj = ois.readObject();
-                if(obj != null){
-                    this.setEmployees((ArrayList<Employee>) obj);
-//                    System.out.println("员工信息初始化成功！");
-                }
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }finally {
-                try {
-                    ois.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        this.loadEmployees();
     }
 
     /*
@@ -109,6 +90,35 @@ public class Company implements Iterable {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Employees.dat"));
             oos.writeObject(this.getEmployees());
             oos.close();
+        }
+    }
+
+    /*
+     * @Description //TODO 加载员工数据
+     * @Date 19:28 2020/7/14
+     * @Param []
+     * @return void
+     **/
+    public void loadEmployees(){
+        File src = new File("Employees.dat");
+        if(src.exists()){
+            ObjectInputStream ois = null;
+            try {
+                ois = new ObjectInputStream(new FileInputStream(src));
+                Object obj = ois.readObject();
+                if(obj != null){
+                    this.setEmployees((ArrayList<Employee>) obj);
+//                    System.out.println("员工信息初始化成功！");
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }finally {
+                try {
+                    ois.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
