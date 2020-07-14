@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
@@ -42,6 +43,7 @@ public class Controller implements Initializable {
     //用于比较是否为同一天
     private SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd");
     private ObservableList<CheckInCheckOutList> data = FXCollections.observableArrayList(list);
+    private ObservableList<Employee> employees = FXCollections.observableArrayList(com.getEmployees());
 
     /*
      * @Description //TODO 打卡系统交互节面
@@ -299,17 +301,11 @@ public class Controller implements Initializable {
         Platform.exit();
     }
 
-    /*
-     * @Description //TODO 
-     * @Date 0:53 2020/7/13
-     * @Param []
-     * @return void
-     **/
-//    private void employeeManagement() throws IOException {
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("EmployeeManagement"));
-//    }
-
+    @FXML
+    private void EmployeeManagement() throws Exception {
+        EmployeeManagement em = new EmployeeManagement();
+        em.start(new Stage());
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
