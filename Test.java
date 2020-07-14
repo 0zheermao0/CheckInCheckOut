@@ -20,6 +20,8 @@ public class Test  extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Controller c = new Controller();
+        c.mainMenu();
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("员工打卡系统");
         primaryStage.setScene(new Scene(root, 590, 700));
