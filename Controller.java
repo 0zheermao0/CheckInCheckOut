@@ -309,6 +309,8 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        IDCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("IDCol"));
+        checkInCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("checkInCol"));
+        checkOutCol.setCellValueFactory(new PropertyValueFactory<TableView,String>("checkOut"));
     }
 }
