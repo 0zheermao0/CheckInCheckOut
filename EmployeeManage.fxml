@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CheckInCheckOut.Controller">
+   <children>
+      <Button fx:id="addEmployee" layoutX="53.0" layoutY="356.0" mnemonicParsing="false" onAction="#addEmployee" text="增加员工" />
+      <Button fx:id="removeEmployee" layoutX="186.0" layoutY="356.0" mnemonicParsing="false" onAction="#removeEmployee" text="移除员工" />
+      <Label layoutX="237.0" layoutY="14.0" prefHeight="46.0" prefWidth="126.0" text="后台管理">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <TableView fx:id="table2" layoutX="206.0" layoutY="135.0" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="emIDCol" onEditStart="#addEmployee" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="emNameCol" onEditStart="#addEmployee" prefWidth="124.0" text="员工姓名" />
+        </columns>
+      </TableView>
+      <Button fx:id="printEmployee" layoutX="308.0" layoutY="356.0" mnemonicParsing="false" onAction="#printEmployee" text="打印员工信息" />
+      <TextField fx:id="IDtf" layoutX="201.0" layoutY="77.0" prefHeight="30.0" prefWidth="65.0" text="输入ID" />
+      <TextField fx:id="nametf" layoutX="346.0" layoutY="77.0" prefHeight="30.0" prefWidth="80.0" text="输入姓名" />
+      <Label fx:id="lable2" layoutX="167.0" layoutY="60.0" prefHeight="20.0" prefWidth="284.0" textFill="#e80303" />
+      <Button layoutX="466.0" layoutY="356.0" mnemonicParsing="false" onAction="#quit" text="保存并退出" />
+   </children>
+</AnchorPane>

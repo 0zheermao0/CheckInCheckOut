@@ -7,9 +7,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
@@ -37,6 +40,20 @@ public class Controller implements Initializable {
     private TableColumn<TableView,String> checkOutCol;
     @FXML
     private TextField menu;
+    @FXML
+    private TextField IDtf;
+    @FXML
+    private TextField nametf;
+    @FXML
+    private Label lable2;
+
+    //员工信息表
+    @FXML
+    private javafx.scene.control.TableView<EmployeeView> table2 ;
+    @FXML
+    private TableColumn<EmployeeView,String> emIDCol;
+    @FXML
+    private TableColumn<EmployeeView,String> emNameCol;
 
     Scanner sc = new Scanner(System.in);
     private Company com = new Company();
@@ -45,8 +62,8 @@ public class Controller implements Initializable {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
     //用于比较是否为同一天
     private SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd");
-    //FXML中TableView维护的列表
-    private ObservableList<CheckInCheckOutList> data = FXCollections.observableArrayList(list);
+//    //FXML中TableView维护的列表
+//    private ObservableList<CheckInCheckOutList> data = FXCollections.observableArrayList(list);
 
     /*
      * @Description //TODO 打卡系统交互节面（已被GUI界面取代）
@@ -99,20 +116,18 @@ public class Controller implements Initializable {
      * @Param []
      * @return void
      **/
-    public void addEmployee(){
-        System.out.println("请输入员工ID和姓名 >");
-        int ID = sc.nextInt();
+    public void addEmployee() throws IOException {
+        String ID = IDtf.getText();
         for(Employee e : com.getEmployees()){
-            if(e.getID() == ID){
-                System.out.println("ID重复，请选择其他ID!");
-                this.addEmployee();
+            if((e.getID()+"").equals(ID)){
+                lable2.setText("ID重复，请选择其他ID!");
+                return;
             }
         }
-        sc.nextLine();
-        System.out.println("可用的ID，请输入新员工姓名 >");
-        String name = sc.nextLine();
-        com.addEmployee(new Employee(ID,name));
-        System.out.println("添加成功!");
+        String name = nametf.getText();
+        com.addEmployee(new Employee(Integer.parseInt(ID),name));
+        lable2.setText("添加成功!");
+        com.saveEmployees();
     }
 
     /*
@@ -121,17 +136,17 @@ public class Controller implements Initializable {
      * @Param []
      * @return void
      **/
-    public void removeEmployee(){
-        System.out.println("请输入想删除的员工的ID >");
-        int ID = sc.nextInt();
+    public void removeEmployee() throws IOException {
+        String ID = emIDCol.getText();
         for(Employee e : com.getEmployees()){
-            if(e.getID() == ID){
+            if((e.getID()+"").equals(ID)){
                 com.removeEmployee(e);
-                System.out.println("员工信息成功删除");
+                lable2.setText("员工信息成功删除");
+                com.saveEmployees();
                 return;
             }
         }
-        System.out.println("输入的员工ID有误!");
+        lable2.setText("输入的员工ID有误!");
     }
 
     /*
@@ -299,8 +314,50 @@ public class Controller implements Initializable {
         this.com.saveEmployees();
         //保存打卡信息
         this.list.saveDakaInfos();
-        label1.setText("感谢使用本系统，所有信息已保存，再见!");
         Platform.exit();
+    }
+
+    @FXML
+    private void quitBack(){
+
+    }
+
+    @FXML
+    /*
+     * @Description //TODO
+     * @Date 15:08 2020/7/14
+     * @Param []
+     * @return void
+     **/
+    private void employeeManage(){
+        try{
+            Parent anotherRoot = FXMLLoader.load(getClass().getResource("EmployeeManage.fxml"));
+            Stage anotherStage = new Stage();
+            anotherStage.setTitle("员工后台管理");
+            anotherStage.setScene(new Scene(anotherRoot, 600, 450));
+            anotherStage.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     * @Description //TODO 打印所有员工信息
+     * @Date 18:30 2020/7/1
+     * @Param []
+     * @return void
+     **/
+    @FXML
+    public void printEmployee(){
+        ObservableList<EmployeeView> data = FXCollections.observableArrayList();
+        if(com.getEmployees() != null){
+            for(Employee e : com.getEmployees()){
+                data.add(new EmployeeView(e.getID()+"",e.getName()));
+            }
+        }
+        emIDCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmIDProperty()));
+        emNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmNameProperty()));
+        table2.setItems(data);
     }
 
 

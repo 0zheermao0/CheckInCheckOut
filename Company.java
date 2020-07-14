@@ -24,7 +24,7 @@ public class Company implements Iterable {
                 Object obj = ois.readObject();
                 if(obj != null){
                     this.setEmployees((ArrayList<Employee>) obj);
-                    System.out.println("员工信息初始化成功！");
+//                    System.out.println("员工信息初始化成功！");
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -46,7 +46,7 @@ public class Company implements Iterable {
      **/
     public void addEmployee(Employee e){
         employees.add(e);
-        System.out.println("-----添加成功-----");
+//        System.out.println("-----添加成功-----");
     }
 
     /*
@@ -76,18 +76,18 @@ public class Company implements Iterable {
         return null;
     }
 
-    /*
-     * @Description //TODO 打印所有员工信息
-     * @Date 18:30 2020/7/1
-     * @Param []
-     * @return void
-     **/
-    public void printEmployee(){
-        System.out.println("-----开始打印员工信息----");
-        for(Employee e : employees){
-            System.out.println(e);
-        }
-    }
+//    /*
+//     * @Description //TODO 打印所有员工信息
+//     * @Date 18:30 2020/7/1
+//     * @Param []
+//     * @return void
+//     **/
+//    public void printEmployee(){
+//        System.out.println("-----开始打印员工信息----");
+//        for(Employee e : employees){
+//            System.out.println(e);
+//        }
+//    }
 
     public ArrayList<Employee> getEmployees(){
         return this.employees;

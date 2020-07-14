@@ -31,6 +31,6 @@
       <Button fx:id="quit" layoutX="244.0" layoutY="593.0" mnemonicParsing="false" onAction="#quit" text="保存并退出" />
       <Button fx:id="printInfo" layoutX="237.0" layoutY="552.0" mnemonicParsing="false" onAction="#printInfo" text="打印打卡信息" />
       <TextField fx:id="menu" layoutX="152.0" layoutY="63.0" prefHeight="88.0" prefWidth="288.0" promptText="请在此输入信息" text="请在此输入员工ID后选择签到或签退" />
-      <Button fx:id="EmployeeManagement" layoutX="468.0" layoutY="24.0" mnemonicParsing="false" onAction="#EmployeeManagement" text="测试" />
+      <Button fx:id="em" layoutX="456.0" layoutY="24.0" mnemonicParsing="false" onAction="#employeeManage" text="员工后台管理" />
    </children>
 </AnchorPane>
